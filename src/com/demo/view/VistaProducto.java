@@ -11,6 +11,9 @@ package com.demo.view;
  */
 public class VistaProducto extends javax.swing.JFrame {
      VistaPresentacion vistaPresentacion;
+     VistaMarca vistaMarca;
+     VistaProveedor vistaProveedor;
+     VistaZona vistaZona;
     /**
      * Creates new form VistaProducto
      */
@@ -18,6 +21,9 @@ public class VistaProducto extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         vistaPresentacion = new VistaPresentacion();
+        vistaMarca = new VistaMarca();
+        vistaProveedor = new VistaProveedor();
+        vistaZona = new VistaZona();
     }
 
     /**
@@ -260,12 +266,27 @@ public class VistaProducto extends javax.swing.JFrame {
         jMenuBar1.add(jMenPresentacion);
 
         jMenProveedor.setText("Proveedor");
+        jMenProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenProveedorMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenProveedor);
 
         jMenZona.setText("Zona");
+        jMenZona.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenZonaMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenZona);
 
         jMenMarca.setText("Marca");
+        jMenMarca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenMarcaMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenMarca);
 
         setJMenuBar(jMenuBar1);
@@ -297,6 +318,18 @@ public class VistaProducto extends javax.swing.JFrame {
     private void jMenPresentacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenPresentacionMouseClicked
        vistaPresentacion.setVisible(true);
     }//GEN-LAST:event_jMenPresentacionMouseClicked
+
+    private void jMenProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenProveedorMouseClicked
+        vistaProveedor.setVisible(true);
+    }//GEN-LAST:event_jMenProveedorMouseClicked
+
+    private void jMenZonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenZonaMouseClicked
+        vistaZona.setVisible(true);
+    }//GEN-LAST:event_jMenZonaMouseClicked
+
+    private void jMenMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenMarcaMouseClicked
+        vistaMarca.setVisible(true);
+    }//GEN-LAST:event_jMenMarcaMouseClicked
 
     /**
      * @param args the command line arguments
