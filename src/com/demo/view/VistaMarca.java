@@ -5,11 +5,16 @@
  */
 package com.demo.view;
 
+import com.demo.controller.ControladorMarca;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Fekilo
  */
 public class VistaMarca extends javax.swing.JFrame {
+
+    ControladorMarca cMarca;
 
     /**
      * Creates new form VistaMarca
@@ -17,6 +22,8 @@ public class VistaMarca extends javax.swing.JFrame {
     public VistaMarca() {
         initComponents();
         this.setLocationRelativeTo(null);
+        cMarca = new ControladorMarca();
+        listarMarcas();
     }
 
     /**
@@ -48,6 +55,11 @@ public class VistaMarca extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnDelete.setText("DELETE");
+        jbtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDeleteActionPerformed(evt);
+            }
+        });
 
         jtbMarcas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -68,6 +80,11 @@ public class VistaMarca extends javax.swing.JFrame {
         jLabel1.setText("MARCA");
 
         jbtnUpdate.setText("UPDATE");
+        jbtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,6 +121,11 @@ public class VistaMarca extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnCreate.setText("CREATE");
+        jbtnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCreateActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Id");
 
@@ -168,6 +190,74 @@ public class VistaMarca extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCreateActionPerformed
+        String id, descripcion;
+        id = this.jtxtId.getText();
+        descripcion = this.jtxtDescripcion.getText();
+        int band;
+        band = this.cMarca.createMarca(id, descripcion);
+        switch (band) {
+            case 0:
+                JOptionPane.showMessageDialog(this, "Creación valida !!");
+                listarMarcas();
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Error de creación !!");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                break;
+        }
+    }//GEN-LAST:event_jbtnCreateActionPerformed
+
+    private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
+        int fila = jtbMarcas.getSelectedRow();
+        if (fila > -1) {
+            String id = jtbMarcas.getValueAt(fila, 0).toString();
+            String descripcion = jtbMarcas.getValueAt(fila, 1).toString();
+            int band;
+            band = this.cMarca.deleteMarca(id, descripcion);
+            switch (band) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "eliminación valida !!");
+                    listarMarcas();
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "Error de eliminación !!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una fila !!");
+        }
+    }//GEN-LAST:event_jbtnDeleteActionPerformed
+
+    private void jbtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpdateActionPerformed
+        int fila = jtbMarcas.getSelectedRow();
+        if (fila > -1) {
+            String id = jtbMarcas.getValueAt(fila, 0).toString();
+            String descripcion = jtbMarcas.getValueAt(fila, 1).toString();
+            int band;
+            band = this.cMarca.updateMarca(id, descripcion);
+            switch (band) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "actualización valida !!");
+                    listarMarcas();
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "Error de actualización !!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una marca !!");
+        }
+    }//GEN-LAST:event_jbtnUpdateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -217,4 +307,13 @@ public class VistaMarca extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtDescripcion;
     private javax.swing.JTextField jtxtId;
     // End of variables declaration//GEN-END:variables
+
+    public void listarMarcas() {
+        jtbMarcas.setModel(new javax.swing.table.DefaultTableModel(
+                cMarca.readMarca(),
+                new String[]{
+                    "Id", "Descripción"
+                }
+        ));
+    }
 }

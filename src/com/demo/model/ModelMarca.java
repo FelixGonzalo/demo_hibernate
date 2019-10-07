@@ -15,14 +15,17 @@ import org.hibernate.Session;
  */
 public class ModelMarca extends Modelo {
 
-    public static void createMarca(Marca marca) {
+    public static int createMarca(Marca marca) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.save(marca);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
     public static List<Marca> readMarca() {
@@ -37,39 +40,29 @@ public class ModelMarca extends Modelo {
         return marcas;
     }
 
-    public static void updateMarca(Marca marca) {
+    public static int updateMarca(Marca marca) {
+         int band =0;
         try {
             Session session = iniciaOperacion();
             session.update(marca);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
-    public static void deleteMarca(Marca marca) {
+    public static int deleteMarca(Marca marca) {
+         int band =0;
         try {
             Session session = iniciaOperacion();
             session.delete(marca);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
-    }
-
-    public static void main(String[] args) {
-        //solo para pruebas
-        ModelMarca prueba = new ModelMarca();
-        List<Marca> temp = null;
-        Marca onodo2 = new Marca();
-        onodo2.setIdMarca(2);
-        onodo2.setDescripcion("solo es prueba actualida otra vez 2");
-        prueba.updateMarca(onodo2);
-        temp = null;
-        temp = prueba.readMarca();
-        for (Marca marca : temp) {
-            System.out.println(marca.getIdMarca() + " --> " + marca.getDescripcion());
-        }
-
+        return band;
     }
 }
