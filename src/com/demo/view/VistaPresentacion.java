@@ -5,18 +5,24 @@
  */
 package com.demo.view;
 
+import com.demo.controller.ControladorPresentacion;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Fekilo
  */
 public class VistaPresentacion extends javax.swing.JFrame {
-
+    ControladorPresentacion cPresentacion;
     /**
      * Creates new form VistaPresentacion
      */
     public VistaPresentacion() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setTitle("Presentación");
+        cPresentacion = new ControladorPresentacion();
+        listarPresentaciones();
     }
 
     /**
@@ -43,11 +49,21 @@ public class VistaPresentacion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(205, 247, 211));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnDelete.setText("DELETE");
+        jbtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDeleteActionPerformed(evt);
+            }
+        });
 
         jtbPresentaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,9 +81,15 @@ public class VistaPresentacion extends javax.swing.JFrame {
             jtbPresentaciones.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("PRESENTACIÓN");
 
         jbtnUpdate.setText("UPDATE");
+        jbtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,9 +116,9 @@ public class VistaPresentacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnDelete)
-                    .addComponent(jbtnUpdate))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbtnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -104,6 +126,11 @@ public class VistaPresentacion extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnCreate.setText("CREATE");
+        jbtnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCreateActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Id");
 
@@ -168,6 +195,88 @@ public class VistaPresentacion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCreateActionPerformed
+        String id, descripcion;
+        id = this.jtxtId.getText();
+        descripcion = this.jtxtDescripcion.getText();
+        int band;
+        band = this.cPresentacion.createPresentacion(id, descripcion);
+        switch (band) {
+            case 0:
+                JOptionPane.showMessageDialog(this, "Creación valida !!");
+                limpiarTxt();
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Error de creación !!");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                break;
+        }
+        listarPresentaciones();
+    }//GEN-LAST:event_jbtnCreateActionPerformed
+
+    private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
+        int fila = jtbPresentaciones.getSelectedRow();
+        if (fila > -1) {
+            String id = jtbPresentaciones.getValueAt(fila, 0).toString();
+            String descripcion = jtbPresentaciones.getValueAt(fila, 1).toString();
+            int band;
+            band = this.cPresentacion.deletePresentacion(id, descripcion);
+            switch (band) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "eliminación valida !!");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "Error de eliminación !!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una fila !!");
+        }
+        listarPresentaciones();
+    }//GEN-LAST:event_jbtnDeleteActionPerformed
+
+    private void jbtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpdateActionPerformed
+        int fila = jtbPresentaciones.getSelectedRow();
+        if (fila > -1) {
+            String id = jtbPresentaciones.getValueAt(fila, 0).toString();
+            String descripcion = jtbPresentaciones.getValueAt(fila, 1).toString();
+            int band;
+            band = this.cPresentacion.updatePresentacion(id, descripcion);
+            switch (band) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "actualización valida !!");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "Error de actualización !!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una marca !!");
+        }
+        listarPresentaciones();
+    }//GEN-LAST:event_jbtnUpdateActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        limpiarTxt();
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
@@ -217,4 +326,19 @@ public class VistaPresentacion extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtDescripcion;
     private javax.swing.JTextField jtxtId;
     // End of variables declaration//GEN-END:variables
+
+    public void listarPresentaciones() {
+        jtbPresentaciones.setModel(new javax.swing.table.DefaultTableModel(
+            cPresentacion.readPresentacion(),
+            new String [] {
+                "Id", "Descripción"
+            }
+        ));
+    }
+    
+    public void limpiarTxt(){
+        jtxtDescripcion.setText("");
+        jtxtId.setText("");
+    }
+
 }

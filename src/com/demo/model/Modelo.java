@@ -33,9 +33,8 @@ public class Modelo {
         session.close();
     }
     
-     public static void mensajeError(Exception e) {
-       JOptionPane.showMessageDialog(null, "Error: " + e);
-       
+    public static void mensajeError(Exception e) {
+       JOptionPane.showMessageDialog(null, "Error en Modelo: " + e);
     }
 
 }

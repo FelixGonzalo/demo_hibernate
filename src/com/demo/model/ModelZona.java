@@ -14,14 +14,17 @@ import org.hibernate.Session;
  * @author Fekilo
  */
 public class ModelZona extends Modelo {
-     public static void createZona(Zona zona) {
+     public static int createZona(Zona zona) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.save(zona);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
     public static List<Zona> readZona() {
@@ -36,23 +39,29 @@ public class ModelZona extends Modelo {
         return zonas;
     }
 
-    public static void updateZona(Zona zona) {
+    public static int updateZona(Zona zona) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.update(zona);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
-    public static void deleteZona(Zona zona) {
+    public static int deleteZona(Zona zona) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.delete(zona);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 }

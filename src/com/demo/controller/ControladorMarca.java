@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Fekilo
  */
-public class ControladorMarca {
+public class ControladorMarca extends Controlador{
 
     public int createMarca(String id, String descripcion) {
         int band = 0;
@@ -24,6 +24,7 @@ public class ControladorMarca {
                 Marca marca = new Marca(Integer.parseInt(id), descripcion);
                 band = ModelMarca.createMarca(marca);
             } catch (Exception e) {
+                band = 3;
             }
         }
         return band;
@@ -42,7 +43,7 @@ public class ControladorMarca {
                 marcas[i][1] = tpMarca.getDescripcion();
             }
         } catch (Exception e) {
-            System.out.println("Error readMarca: " + e);
+            mensajeError(e);
         }
         return marcas;
     }
@@ -56,6 +57,7 @@ public class ControladorMarca {
                 Marca marca = new Marca(Integer.parseInt(id), descripcion);
                 band = ModelMarca.updateMarca(marca);
             } catch (Exception e) {
+                band = 3;
             }
         }
         return band;
@@ -70,9 +72,9 @@ public class ControladorMarca {
                 Marca marca = new Marca(Integer.parseInt(id), descripcion);
                 band = ModelMarca.deleteMarca(marca);
             } catch (Exception e) {
+                band = 3;
             }
         }
         return band;
     }
-
 }

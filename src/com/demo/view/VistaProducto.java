@@ -20,6 +20,7 @@ public class VistaProducto extends javax.swing.JFrame {
     public VistaProducto() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setTitle("Producto_demo Hibernate");
         vistaPresentacion = new VistaPresentacion();
         vistaMarca = new VistaMarca();
         vistaProveedor = new VistaProveedor();
@@ -92,6 +93,7 @@ public class VistaProducto extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtbProductos);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("PRODUCTO");
 
         jbtnUpdate.setText("UPDATE");

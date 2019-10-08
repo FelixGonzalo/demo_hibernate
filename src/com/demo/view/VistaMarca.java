@@ -22,6 +22,7 @@ public class VistaMarca extends javax.swing.JFrame {
     public VistaMarca() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setTitle("Marca");
         cMarca = new ControladorMarca();
         listarMarcas();
     }
@@ -50,6 +51,14 @@ public class VistaMarca extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                formWindowDeactivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(205, 247, 211));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -77,6 +86,7 @@ public class VistaMarca extends javax.swing.JFrame {
             jtbMarcas.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("MARCA");
 
         jbtnUpdate.setText("UPDATE");
@@ -199,7 +209,7 @@ public class VistaMarca extends javax.swing.JFrame {
         switch (band) {
             case 0:
                 JOptionPane.showMessageDialog(this, "Creación valida !!");
-                listarMarcas();
+                limpiarTxt();
                 break;
             case 1:
                 JOptionPane.showMessageDialog(this, "Error de creación !!");
@@ -207,7 +217,11 @@ public class VistaMarca extends javax.swing.JFrame {
             case 2:
                 JOptionPane.showMessageDialog(this, "Complete los datos !!");
                 break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                break;
         }
+        listarMarcas();
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
     private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
@@ -220,7 +234,6 @@ public class VistaMarca extends javax.swing.JFrame {
             switch (band) {
                 case 0:
                     JOptionPane.showMessageDialog(this, "eliminación valida !!");
-                    listarMarcas();
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(this, "Error de eliminación !!");
@@ -228,10 +241,14 @@ public class VistaMarca extends javax.swing.JFrame {
                 case 2:
                     JOptionPane.showMessageDialog(this, "Complete los datos !!");
                     break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                break;
             }
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione una fila !!");
         }
+        listarMarcas();
     }//GEN-LAST:event_jbtnDeleteActionPerformed
 
     private void jbtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpdateActionPerformed
@@ -244,7 +261,6 @@ public class VistaMarca extends javax.swing.JFrame {
             switch (band) {
                 case 0:
                     JOptionPane.showMessageDialog(this, "actualización valida !!");
-                    listarMarcas();
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(this, "Error de actualización !!");
@@ -252,11 +268,23 @@ public class VistaMarca extends javax.swing.JFrame {
                 case 2:
                     JOptionPane.showMessageDialog(this, "Complete los datos !!");
                     break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                break;
             }
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione una marca !!");
         }
+        listarMarcas();
     }//GEN-LAST:event_jbtnUpdateActionPerformed
+
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowDeactivated
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        limpiarTxt();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -315,5 +343,10 @@ public class VistaMarca extends javax.swing.JFrame {
                     "Id", "Descripción"
                 }
         ));
+    }
+    
+    public void limpiarTxt(){
+        jtxtDescripcion.setText("");
+        jtxtId.setText("");
     }
 }

@@ -14,14 +14,17 @@ import org.hibernate.Session;
  * @author Fekilo
  */
 public class ModelProveedor extends Modelo{
-    public static void createProveedor(Proveedor proveedor) {
+    public static int createProveedor(Proveedor proveedor) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.save(proveedor);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
     public static List<Proveedor> readProveedor() {
@@ -36,23 +39,29 @@ public class ModelProveedor extends Modelo{
         return proveedores;
     }
 
-    public static void updateProveedor(Proveedor proveedor) {
+    public static int updateProveedor(Proveedor proveedor) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.update(proveedor);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
-    public static void deleteProveedor(Proveedor proveedor) {
+    public static int deleteProveedor(Proveedor proveedor) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.delete(proveedor);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 }

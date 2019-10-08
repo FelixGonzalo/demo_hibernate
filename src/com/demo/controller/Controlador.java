@@ -5,10 +5,14 @@
  */
 package com.demo.controller;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Fekilo
  */
 public class Controlador {
-    
+    public static void mensajeError(Exception e) {
+       JOptionPane.showMessageDialog(null, "Error en Controlador: " + e);
+    }
 }

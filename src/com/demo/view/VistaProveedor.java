@@ -5,18 +5,24 @@
  */
 package com.demo.view;
 
+import com.demo.controller.ControladorProveedor;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Fekilo
  */
 public class VistaProveedor extends javax.swing.JFrame {
-
+    ControladorProveedor cProveedor;
     /**
      * Creates new form VistaProveedor
      */
     public VistaProveedor() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setTitle("Proveedor");
+        cProveedor = new ControladorProveedor();
+        listarProveedores();
     }
 
     /**
@@ -42,11 +48,21 @@ public class VistaProveedor extends javax.swing.JFrame {
         jtxtDescripcion = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(205, 247, 211));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnDelete.setText("DELETE");
+        jbtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDeleteActionPerformed(evt);
+            }
+        });
 
         jtbProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -64,9 +80,15 @@ public class VistaProveedor extends javax.swing.JFrame {
             jtbProveedores.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("PROVEEDOR");
 
         jbtnUpdate.setText("UPDATE");
+        jbtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,6 +125,11 @@ public class VistaProveedor extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jbtnCreate.setText("CREATE");
+        jbtnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCreateActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Id");
 
@@ -167,6 +194,88 @@ public class VistaProveedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCreateActionPerformed
+        String id, descripcion;
+        id = this.jtxtId.getText();
+        descripcion = this.jtxtDescripcion.getText();
+        int band;
+        band = this.cProveedor.createProveedor(id, descripcion);
+        switch (band) {
+            case 0:
+                JOptionPane.showMessageDialog(this, "Creación valida !!");
+                limpiarTxt();
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Error de creación !!");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                break;
+        }
+        listarProveedores();
+    }//GEN-LAST:event_jbtnCreateActionPerformed
+
+    private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
+        int fila = jtbProveedores.getSelectedRow();
+        if (fila > -1) {
+            String id = jtbProveedores.getValueAt(fila, 0).toString();
+            String descripcion = jtbProveedores.getValueAt(fila, 1).toString();
+            int band;
+            band = this.cProveedor.deleteProveedor(id, descripcion);
+            switch (band) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "eliminación valida !!");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "Error de eliminación !!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una fila !!");
+        }
+        listarProveedores();
+    }//GEN-LAST:event_jbtnDeleteActionPerformed
+
+    private void jbtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpdateActionPerformed
+        int fila = jtbProveedores.getSelectedRow();
+        if (fila > -1) {
+            String id = jtbProveedores.getValueAt(fila, 0).toString();
+            String descripcion = jtbProveedores.getValueAt(fila, 1).toString();
+            int band;
+            band = this.cProveedor.updateProveedor(id, descripcion);
+            switch (band) {
+                case 0:
+                    JOptionPane.showMessageDialog(this, "actualización valida !!");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(this, "Error de actualización !!");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(this, "Complete los datos !!");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Error con el ID, aceptamos solos números !!");
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una marca !!");
+        }
+        listarProveedores();
+    }//GEN-LAST:event_jbtnUpdateActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        limpiarTxt();
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
@@ -216,4 +325,18 @@ public class VistaProveedor extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtDescripcion;
     private javax.swing.JTextField jtxtId;
     // End of variables declaration//GEN-END:variables
+
+    public void listarProveedores() {
+        jtbProveedores.setModel(new javax.swing.table.DefaultTableModel(
+            cProveedor.readProveedor(),
+            new String [] {
+                "Id", "Descripción"
+            }
+        ));
+    }
+    
+    public void limpiarTxt(){
+        jtxtDescripcion.setText("");
+        jtxtId.setText("");
+    }
 }

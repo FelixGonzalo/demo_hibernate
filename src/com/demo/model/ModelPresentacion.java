@@ -14,14 +14,17 @@ import org.hibernate.Session;
  * @author Fekilo
  */
 public class ModelPresentacion extends Modelo{
-    public static void createPresentacion(Presentacion presentacion) {
+    public static int createPresentacion(Presentacion presentacion) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.save(presentacion);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
     public static List<Presentacion> readPresentacion() {
@@ -36,23 +39,29 @@ public class ModelPresentacion extends Modelo{
         return presentaciones;
     }
 
-    public static void updatePresentacion(Presentacion presentacion) {
+    public static int updatePresentacion(Presentacion presentacion) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.update(presentacion);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
-    public static void deletePresentacion(Presentacion presentacion) {
+    public static int deletePresentacion(Presentacion presentacion) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.delete(presentacion);
             terminarOperacion(session);
         } catch (Exception e) {
             mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 }
