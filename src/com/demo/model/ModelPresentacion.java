@@ -64,4 +64,16 @@ public class ModelPresentacion extends Modelo{
         }
         return band;
     }
+    
+    public static Presentacion readPresentacion(int idPresentacion) {
+        Presentacion presentacion = null;
+        try {
+            Session session = iniciaOperacion();
+            presentacion = (Presentacion) session.get(Presentacion.class, idPresentacion);
+            terminarOperacion(session);
+        } catch (Exception e) {
+            mensajeError(e);
+        }
+        return presentacion;
+    }
 }

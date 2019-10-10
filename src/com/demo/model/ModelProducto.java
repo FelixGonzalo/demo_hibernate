@@ -15,46 +15,55 @@ import org.hibernate.Session;
  */
 public class ModelProducto extends Modelo {
 
-    public void createProducto(Producto producto) {
+    public static int createProducto(Producto producto) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.save(producto);
             terminarOperacion(session);
         } catch (Exception e) {
-            System.out.println("error: " + e);
+            mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
-    public List<Producto> readProducto() {
+    public static List<Producto> readProducto() {
         List<Producto> productos = null;
         try {
             Session session = iniciaOperacion();
             productos = session.createQuery("from Producto").list();
             terminarOperacion(session);
         } catch (Exception e) {
-            System.out.println("error: " + e);
+            mensajeError(e);
         }
         return productos;
     }
 
-    public void updateProducto(Producto producto) {
+    public static int updateProducto(Producto producto) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.update(producto);
             terminarOperacion(session);
         } catch (Exception e) {
-            System.out.println("error: " + e);
+            mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
-    public void deleteProducto(Producto producto) {
+    public static int deleteProducto(Producto producto) {
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.delete(producto);
             terminarOperacion(session);
         } catch (Exception e) {
-            System.out.println("error: " + e);
+            mensajeError(e);
+            band = 1;
         }
+        return band;
     }
 
     public Producto readProducto(int idProducto) {
@@ -63,9 +72,8 @@ public class ModelProducto extends Modelo {
             Session session = iniciaOperacion();
             producto = (Producto) session.get(Producto.class, idProducto);
             terminarOperacion(session);
-
         } catch (Exception e) {
-            System.out.println("error: " + e);
+            mensajeError(e);
         }
         return producto;
     }

@@ -64,4 +64,16 @@ public class ModelZona extends Modelo {
         }
         return band;
     }
+    
+    public static Zona readZona(int idZona) {
+        Zona zona = null;
+        try {
+            Session session = iniciaOperacion();
+            zona = (Zona) session.get(Zona.class, idZona);
+            terminarOperacion(session);
+        } catch (Exception e) {
+            mensajeError(e);
+        }
+        return zona;
+    }
 }

@@ -64,4 +64,16 @@ public class ModelProveedor extends Modelo{
         }
         return band;
     }
+    
+    public static Proveedor readProveedor(int idProveedor) {
+        Proveedor proveedor = null;
+        try {
+            Session session = iniciaOperacion();
+            proveedor = (Proveedor) session.get(Proveedor.class, idProveedor);
+            terminarOperacion(session);
+        } catch (Exception e) {
+            mensajeError(e);
+        }
+        return proveedor;
+    }
 }

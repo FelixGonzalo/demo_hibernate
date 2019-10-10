@@ -41,7 +41,7 @@ public class ModelMarca extends Modelo {
     }
 
     public static int updateMarca(Marca marca) {
-         int band =0;
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.update(marca);
@@ -54,7 +54,7 @@ public class ModelMarca extends Modelo {
     }
 
     public static int deleteMarca(Marca marca) {
-         int band =0;
+        int band =0;
         try {
             Session session = iniciaOperacion();
             session.delete(marca);
@@ -64,5 +64,17 @@ public class ModelMarca extends Modelo {
             band = 1;
         }
         return band;
+    }
+    
+    public static Marca readMarca(int idMarca) {
+        Marca marca = null;
+        try {
+            Session session = iniciaOperacion();
+            marca = (Marca) session.get(Marca.class, idMarca);
+            terminarOperacion(session);
+        } catch (Exception e) {
+            mensajeError(e);
+        }
+        return marca;
     }
 }
